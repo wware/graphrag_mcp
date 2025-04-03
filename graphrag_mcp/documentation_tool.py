@@ -1,8 +1,18 @@
 import os
+import logging
 from typing import Dict, List, Optional, Any, Union
 from neo4j import GraphDatabase
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
+
+# Configure logging to write to a file instead of stdout
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename='graphrag.log',  # Log to a file instead of stdout
+    filemode='a'
+)
+logger = logging.getLogger('graphrag')
 
 class DocumentationGPTTool:
     """MCP Tool for querying the GraphRAG documentation system."""
@@ -39,9 +49,9 @@ class DocumentationGPTTool:
             with self.neo4j_driver.session() as session:
                 result = session.run("MATCH (d:Document) RETURN count(d) AS count")
                 record = result.single()
-                print(f"Connected to Neo4j with {record['count']} documents")
+                logger.info(f"Connected to Neo4j with {record['count']} documents")
         except Exception as e:
-            print(f"Neo4j connection error: {e}")
+            logger.error(f"Neo4j connection error: {e}")
         
         # Connect to Qdrant
         try:
@@ -65,19 +75,19 @@ class DocumentationGPTTool:
                     except:
                         pass
                 
-                print(f"Connected to Qdrant collection '{self.qdrant_collection}' with {vectors_count} vectors")
+                logger.info(f"Connected to Qdrant collection '{self.qdrant_collection}' with {vectors_count} vectors")
             except Exception as e:
-                print(f"Qdrant connection warning: {e}")
+                logger.warning(f"Qdrant connection warning: {e}")
                 # Fallback for older versions if needed
         except Exception as e:
-            print(f"Qdrant connection error: {e}")
+            logger.error(f"Qdrant connection error: {e}")
         
         # Load the embedding model
         try:
             self.model = SentenceTransformer(self.model_name)
-            print(f"Loaded embedding model: {self.model_name}")
+            logger.info(f"Loaded embedding model: {self.model_name}")
         except Exception as e:
-            print(f"Error loading embedding model: {e}")
+            logger.error(f"Error loading embedding model: {e}")
     
     def search_documentation(self, query: str, limit: int = 5, category: Optional[str] = None) -> Dict[str, Any]:
         """
