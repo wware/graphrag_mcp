@@ -172,7 +172,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 MIT License
 
-Copyright (c) 2025 Ryder Lam
+Copyright (c) 2025 Riley Lemm
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -194,4 +194,4 @@ SOFTWARE.
 
 ## Attribution
 
-If you use this MCP server or adapt it for your own purposes, please provide attribution to Ryder Lam and link back to this repository (https://github.com/rileylemm/graphrag_mcp).
+If you use this MCP server or adapt it for your own purposes, please provide attribution to Riley Lemm and link back to this repository (https://github.com/rileylemm/graphrag_mcp).
