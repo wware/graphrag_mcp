@@ -39,8 +39,21 @@ This project follows the [Model Context Protocol](https://github.com/modelcontex
    ```
 
 2. Install dependencies with uv:
+
+   [Video explaining `uv`](https://www.youtube.com/watch?v=k4qh83m1jg0)
+
+   To get started, I needed to get `uv` installed. This took some
+   experimentation. Along the way I installed pipx and poetry, probably
+   unnecessarily. Finally hit on this, that I could probably have done
+   without any of them. The `uv sync` command is equivalent to the old
+   `pip install -r requirements.txt` command, but it uses `pyproject.toml`
+   and is much better parallelized.
+
    ```bash
-   uv install
+   $ curl -LsSf https://astral.sh/uv/install.sh | sh
+   $ uv venv
+   $ source .venv/bin/activate
+   $ uv sync
    ```
 
 3. Configure your database connections in the `.env` file:
